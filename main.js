@@ -24,8 +24,7 @@ var mainState = {
 		this.left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
 		this.right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
 
-		// Add the paddle at the bottom of the screen
-		this.paddle = game.add.sprite(game.world.centerX, 400, 'breakout', 'paddle_big.png');
+
 		
 		// add the ball
 		this.ball = game.add.sprite(200, 200, 'breakout', 'ball_1.png');
@@ -38,11 +37,12 @@ var mainState = {
 		
 		//this.paddle.body.velocity.x = 200;
 		//this.paddle.body.velocity.x = 200;
+		
+		// Add the paddle at the bottom of the screen
+		this.paddle = game.add.sprite(game.world.centerX, 400, 'breakout', 'paddle_big.png');
 		this.paddle.body.collideWorldBounds = true;
-	
-
 		// Make sure the paddle won't move when it hits the ball
-		//this.paddle.body.immovable = true;
+		this.paddle.body.immovable = true;
 		
 		
 		bricks = game.add.group();
@@ -67,7 +67,9 @@ var mainState = {
 		//if (Phaser.Rectangle.contains(paddle.body, game.input.x, game.input.y))
 		//	this.paddle.body.velocity.setTo(0,0);
 		//else
-		if (Phaser.Rectangle.contains(this.paddle.body, game.input.x, game.input.y))
+		this.paddle.x = game.input.x || game.world.width*0.5;
+	
+		/*if (Phaser.Rectangle.contains(this.paddle.body, game.input.x, game.input.y))
 			this.paddle.body.velocity.setTo(0,0);
 		else
 			game.physics.arcade.moveToPointer(this.paddle, 500);
@@ -78,6 +80,7 @@ var mainState = {
 
 		// Stop the paddle when no key is pressed
 		//else this.paddle.body.velocity.x = 0;  
+		*/
 		
 		game.physics.arcade.collide(this.paddle, this.ball);
 		game.physics.arcade.collide(this.ball, bricks, this.hit, null, this);
